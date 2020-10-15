@@ -9,34 +9,40 @@ import com.sangis.corejava.domain.infrastructure.fileProvider.IFileProvider;
 import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParser;
 import com.sangis.corejava.domain.infrastructure.parser.XmlMunicipalityParser;
 import com.sangis.corejava.domain.infrastructure.persistence.IMunicipalityRepository;
-import com.sangis.corejava.domain.infrastructure.persistence.JDBCMunicipalityRepository;
+import com.sangis.corejava.domain.infrastructure.persistence.PostgreMunicipalityRepository;
 
 public class ApplicationFactory {
-    public static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
-    public static final String FILE_NAME = "20200930_OB_573060_UZSZ.xml.zip";
+    private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
+//    public static final String FILE_NAME = "20200930_OB_573060_UZSZ.xml.zip";
+
+    //SQL
+    private static final String DB_USERNAME = "sa";
+    private static final String DB_PASSWORD = "1234567";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/municipality_db";
+    private static final boolean DB_SSL = true;
 
     public static MunicipalityApplication make(){
        return new MunicipalityApplicationImpl(ApplicationFactory.makeMunicipalityProvider(), makeMunicipalityRepository());
     }
 
 
-    static private IFileProvider makeFileProvider(){
+    private static  IFileProvider makeFileProvider(){
         IFileProvider fileProvider = new URLFileProvider(FILE_URL);
 //       IFileProvider fileProvider = new ResourcesFileProvider(FILE_NAME);
         fileProvider = new FileProviderUnzipDecorator(fileProvider);
         return fileProvider;
     }
 
-    static private MunicipalityParser makeMunicipalityParser(){
+     private static MunicipalityParser makeMunicipalityParser(){
         return new XmlMunicipalityParser();
     }
 
-    static private IMunicipalityProvider makeMunicipalityProvider(){
+     private static IMunicipalityProvider makeMunicipalityProvider(){
         return new MunicipalityProvider(makeFileProvider(), makeMunicipalityParser());
     }
 
-    static private IMunicipalityRepository makeMunicipalityRepository(){
-        return new JDBCMunicipalityRepository();
+     private  static IMunicipalityRepository makeMunicipalityRepository(){
+        return new PostgreMunicipalityRepository(DB_URL,DB_USERNAME, DB_PASSWORD, DB_SSL);
     }
 
 

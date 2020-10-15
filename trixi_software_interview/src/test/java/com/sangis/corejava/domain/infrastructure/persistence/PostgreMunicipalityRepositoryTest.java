@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JDBCMunicipalityRepositoryTest {
+class PostgreMunicipalityRepositoryTest {
    //TODO: TEST PERSISTENCE
     @BeforeEach
     void setUp() {

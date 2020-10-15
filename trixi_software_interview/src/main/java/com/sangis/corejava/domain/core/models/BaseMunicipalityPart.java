@@ -1,22 +1,36 @@
 package com.sangis.corejava.domain.core.models;
 
-public  class BaseMunicipalityPart {
-    protected long code;
-    protected long municipalityId;
-    protected String name;
+import com.sun.istack.internal.NotNull;
 
-    public BaseMunicipalityPart(long code, long municipalityId, String name) {
+public class BaseMunicipalityPart {
+    protected final int code;
+    protected final int municipalityCode;
+    protected final String name;
+
+
+    public  BaseMunicipalityPart(int code, int municipalityCode, String name) throws IllegalArgumentException {
         this.code = code;
-        this.municipalityId = municipalityId;
+        this.municipalityCode = municipalityCode;
         this.name = name;
+        validate();
     }
 
-    public  long getCode() {
-        return this.code;
+    public int getMunicipalityCode() {
+        return municipalityCode;
     }
-    public  String getName(){
-        return this.name;
+
+    public int getCode() {
+        return code;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    private void validate() throws IllegalArgumentException {
+        if (code < 1 || name == null || municipalityCode < 1) throw new IllegalArgumentException();
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -30,6 +44,6 @@ public  class BaseMunicipalityPart {
 
     @Override
     public int hashCode() {
-        return (int) (getCode() ^ (getCode() >>> 32));
+        return getCode();
     }
 }

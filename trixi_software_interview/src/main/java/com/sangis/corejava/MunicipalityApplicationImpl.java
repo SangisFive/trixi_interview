@@ -5,6 +5,7 @@ import com.sangis.corejava.domain.core.models.BaseMunicipality;
 import com.sangis.corejava.domain.infrastructure.IMunicipalityProvider;
 import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParserException;
 import com.sangis.corejava.domain.infrastructure.persistence.IMunicipalityRepository;
+import com.sangis.corejava.domain.infrastructure.persistence.PersistenceException;
 import com.sangis.corejava.utils.EmptyIterator;
 
 import java.io.IOException;
@@ -36,6 +37,10 @@ public class MunicipalityApplicationImpl extends MunicipalityApplication {
     }
 
     protected void persistMunicipality(BaseMunicipality municipality) {
-        repository.saveMunicipality(municipality);
+        try {
+            repository.saveMunicipality(municipality);
+        } catch (PersistenceException e) {
+            onError(e);
+        }
     }
 }
