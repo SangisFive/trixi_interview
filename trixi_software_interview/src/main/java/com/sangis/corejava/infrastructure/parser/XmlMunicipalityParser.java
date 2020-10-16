@@ -24,6 +24,8 @@ public class XmlMunicipalityParser implements MunicipalityParser {
 
     private static final String MUNICIPALITY_PARTS_TAG = "CastiObci";
     private static final String MUNICIPALITY_PART_TAG = "CastObce";
+    public static final String MUNICIPALITY_PART_PREFIX = "coi";
+
 
     private static final String NAME_TAG = "Nazev";
     private static final String CODE_TAG = "Kod";
@@ -101,9 +103,9 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                 String elementName = qname.getLocalPart();
                 switch (elementName) {
                     case CODE_TAG:
-                        if (qname.getPrefix().equals("coi")) {
+                        if (qname.getPrefix().equals(MUNICIPALITY_PART_PREFIX)) {
                             code = Integer.parseInt(reader.getElementText());
-                        } else if (qname.getPrefix().equals("obi")) {
+                        } else if (qname.getPrefix().equals(MUNICIPALITY_PREFIX)) {
                             municipalityCode = Integer.parseInt(reader.getElementText());
                         }
                         break;
@@ -119,5 +121,8 @@ public class XmlMunicipalityParser implements MunicipalityParser {
         }
         throw new MunicipalityParserException("Wrong XML format <" + MUNICIPALITY_PART_TAG + "> tag opened, but EOF reached before closing tag was found");
     }
+
+
+
 
 }
