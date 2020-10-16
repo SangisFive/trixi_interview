@@ -2,10 +2,10 @@ package com.sangis.corejava;
 
 import com.sangis.corejava.domain.core.MunicipalityApplication;
 import com.sangis.corejava.domain.core.models.BaseMunicipality;
-import com.sangis.corejava.domain.infrastructure.IMunicipalityProvider;
-import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParserException;
-import com.sangis.corejava.domain.infrastructure.persistence.IMunicipalityRepository;
-import com.sangis.corejava.domain.infrastructure.persistence.PersistenceException;
+import com.sangis.corejava.infrastructure.IMunicipalityProvider;
+import com.sangis.corejava.infrastructure.parser.MunicipalityParserException;
+import com.sangis.corejava.infrastructure.persistence.IMunicipalityRepository;
+import com.sangis.corejava.infrastructure.persistence.PersistenceException;
 import com.sangis.corejava.utils.EmptyIterator;
 
 import java.io.IOException;

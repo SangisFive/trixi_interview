@@ -1,4 +1,4 @@
-package com.sangis.corejava.domain.infrastructure.persistence;
+package com.sangis.corejava.infrastructure.persistence;
 
 import com.sangis.corejava.domain.core.models.BaseMunicipality;
 import com.sangis.corejava.domain.core.models.BaseMunicipalityPart;

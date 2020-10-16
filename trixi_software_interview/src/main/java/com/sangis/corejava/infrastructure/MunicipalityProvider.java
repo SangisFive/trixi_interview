@@ -1,10 +1,11 @@
-package com.sangis.corejava.domain.infrastructure;
+package com.sangis.corejava.infrastructure;
 
 import com.sangis.corejava.domain.core.models.BaseMunicipality;
-import com.sangis.corejava.domain.infrastructure.fileProvider.IFileProvider;
-import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParser;
-import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParserException;
+import com.sangis.corejava.infrastructure.fileProvider.IFileProvider;
+import com.sangis.corejava.infrastructure.parser.MunicipalityParser;
+import com.sangis.corejava.infrastructure.parser.MunicipalityParserException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -18,7 +19,9 @@ public class MunicipalityProvider implements IMunicipalityProvider {
         this.parser = parser;
     }
     public Iterable<BaseMunicipality> getMunicipalities() throws IOException, MunicipalityParserException {
-        return parser.parse(new FileInputStream(fileProvider.getFile()));
+        File file = fileProvider.getFile();
+        file.deleteOnExit();
+        return parser.parse(new FileInputStream(file));
     }
 }
 

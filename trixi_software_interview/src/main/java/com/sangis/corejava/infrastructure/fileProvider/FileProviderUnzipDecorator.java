@@ -1,4 +1,4 @@
-package com.sangis.corejava.domain.infrastructure.fileProvider;
+package com.sangis.corejava.infrastructure.fileProvider;
 
 import java.io.*;
 import java.util.zip.ZipEntry;

@@ -1,10 +1,8 @@
-package com.sangis.corejava.domain.infrastructure.persistence;
+package com.sangis.corejava.infrastructure.persistence;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PostgreMunicipalityRepositoryTest {
    //TODO: TEST PERSISTENCE

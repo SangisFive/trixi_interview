@@ -1,15 +1,15 @@
 package com.sangis.corejava;
 
 import com.sangis.corejava.domain.core.MunicipalityApplication;
-import com.sangis.corejava.domain.infrastructure.IMunicipalityProvider;
-import com.sangis.corejava.domain.infrastructure.MunicipalityProvider;
-import com.sangis.corejava.domain.infrastructure.fileProvider.FileProviderUnzipDecorator;
-import com.sangis.corejava.domain.infrastructure.fileProvider.URLFileProvider;
-import com.sangis.corejava.domain.infrastructure.fileProvider.IFileProvider;
-import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParser;
-import com.sangis.corejava.domain.infrastructure.parser.XmlMunicipalityParser;
-import com.sangis.corejava.domain.infrastructure.persistence.IMunicipalityRepository;
-import com.sangis.corejava.domain.infrastructure.persistence.PostgreMunicipalityRepository;
+import com.sangis.corejava.infrastructure.IMunicipalityProvider;
+import com.sangis.corejava.infrastructure.MunicipalityProvider;
+import com.sangis.corejava.infrastructure.fileProvider.FileProviderUnzipDecorator;
+import com.sangis.corejava.infrastructure.fileProvider.URLFileProvider;
+import com.sangis.corejava.infrastructure.fileProvider.IFileProvider;
+import com.sangis.corejava.infrastructure.parser.MunicipalityParser;
+import com.sangis.corejava.infrastructure.parser.XmlMunicipalityParser;
+import com.sangis.corejava.infrastructure.persistence.IMunicipalityRepository;
+import com.sangis.corejava.infrastructure.persistence.PostgreMunicipalityRepository;
 
 public class ApplicationFactory {
     private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";

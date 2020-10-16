@@ -1,9 +1,7 @@
-package com.sangis.corejava.domain.infrastructure.parser;
+package com.sangis.corejava.infrastructure.parser;
 
 import com.sangis.corejava.domain.core.models.BaseMunicipality;
 import com.sangis.corejava.domain.core.models.BaseMunicipalityPart;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -26,10 +24,12 @@ class XmlMunicipalityParserTest {
         List<BaseMunicipality> testData = new ArrayList<BaseMunicipality>();
         for (int i = 1; i < 4; i++) {
             BaseMunicipality m = new BaseMunicipality(i, "Name of municipality " + i);
+            testData.add(m);
 
             List<BaseMunicipalityPart> parts = new ArrayList<BaseMunicipalityPart>();
-            for (int j = i; j < 10 + i; j++) {
-                BaseMunicipalityPart p = new BaseMunicipalityPart(j, i, "Name of municipality part " + i);
+            for (int j = 1 ; j < 10 + i; j++) {
+                int code = j*i;
+                BaseMunicipalityPart p = new BaseMunicipalityPart(code, i, "Name of municipality part " + code);
                 parts.add(p);
             }
             m.addParts(parts.iterator());
@@ -58,7 +58,7 @@ class XmlMunicipalityParserTest {
         List<BaseMunicipality> testData = new ArrayList<BaseMunicipality>();
         for (int i = 1; i < 4; i++) {
             BaseMunicipality m = new BaseMunicipality(i, "Name of municipality " + i);
-
+            testData.add(m);
         }
 
         List<BaseMunicipality> results = new ArrayList<BaseMunicipality>();
@@ -107,7 +107,7 @@ class XmlMunicipalityParserTest {
 
             while (inpIt.hasNext()) {
                 BaseMunicipalityPart inpPart = inpIt.next();
-                BaseMunicipalityPart outPart = inpIt.next();
+                BaseMunicipalityPart outPart = outIt.next();
 
                 assertEquals(inpPart.getCode(), outPart.getCode());
                 assertEquals(inpPart.getName(), outPart.getName());

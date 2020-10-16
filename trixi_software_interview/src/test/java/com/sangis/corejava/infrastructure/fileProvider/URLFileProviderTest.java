@@ -1,13 +1,11 @@
-package com.sangis.corejava.domain.infrastructure.fileProvider;
+package com.sangis.corejava.infrastructure.fileProvider;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class FileProviderUnzipDecoratorTest {
-  //TODO: TEST UNZIP DECORATOR
+class URLFileProviderTest {
+   //TEST URLFILEPROVIDER
     @BeforeEach
     void setUp() {
     }
