@@ -40,28 +40,24 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                 if (event.isStartElement() && event.asStartElement().getName().getPrefix().equals(DATA_PREFIX)) {
                     String elementName = event.asStartElement().getName().getLocalPart();
 
-                        switch (elementName) {
-                            case MUNICIPALITY_TAG:
-                                BaseMunicipality municipality = parseMunicipality(reader);
-                                municipalities.put(municipality.getCode(), municipality);
-                                break;
-                            case MUNICIPALITY_PART_TAG:
-
-                                BaseMunicipalityPart municipalityPart = parseMunicipalityPart(reader);
-                                BaseMunicipality parentMunicipality = municipalities.get(municipalityPart.getMunicipalityCode());
-                                if (parentMunicipality != null)
-                                    parentMunicipality.addParts(new SingleItemIterator<>(municipalityPart));
-                                break;
-                        }
-                } else {
-
-
-                    if (event.isEndElement() && event.asEndElement().getName().getLocalPart().equals(MUNICIPALITY_PARTS_TAG))
-                        return municipalities.values();
-
-                }
+                    switch (elementName) {
+                        case MUNICIPALITY_TAG:
+                            BaseMunicipality municipality = parseMunicipality(reader);
+                            municipalities.put(municipality.getCode(), municipality);
+                            break;
+                        case MUNICIPALITY_PART_TAG:
+                            BaseMunicipalityPart municipalityPart = parseMunicipalityPart(reader);
+                            BaseMunicipality parentMunicipality = municipalities.get(municipalityPart.getMunicipalityCode());
+                            if (parentMunicipality != null)
+                                parentMunicipality.addParts(new SingleItemIterator<>(municipalityPart));
+                            break;
+                    }
+                } else if (event.isEndElement()
+                        && event.asEndElement().getName().getLocalPart().equals(DATA_TAG)
+                        && event.asEndElement().getName().getPrefix().equals(DATA_PREFIX))
+                    return municipalities.values();
             }
-            throw new MunicipalityParserException("Wrong XML format <" + MUNICIPALITY_PARTS_TAG + "> never started or never ended, but EOF was reached");
+            throw new MunicipalityParserException("Wrong XML format <" + DATA_TAG + "> never started or never ended, but EOF was reached");
         } catch (XMLStreamException e) {
             throw new MunicipalityParserException(e.getMessage());
         }
@@ -73,7 +69,7 @@ public class XmlMunicipalityParser implements MunicipalityParser {
         String name = null;
         while (reader.hasNext()) {
             final XMLEvent event = reader.nextEvent();
-            if (event.isStartElement() && event.asStartElement().getName().getPrefix().equals(MUNICIPALITY_PREFIX) ) {
+            if (event.isStartElement() && event.asStartElement().getName().getPrefix().equals(MUNICIPALITY_PREFIX)) {
                 final StartElement element = event.asStartElement();
                 final QName elementName = element.getName();
                 switch (elementName.getLocalPart()) {
@@ -83,11 +79,12 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                     case CODE_TAG:
                         code = Integer.parseInt(reader.getElementText());
                 }
-            } else {
-                if (event.isEndElement() && event.asEndElement().getName().getLocalPart().equals(MUNICIPALITY_TAG)) {
-                    return new BaseMunicipality(code, name);
-                }
+            } else if (event.isEndElement()
+                    && event.asEndElement().getName().getLocalPart().equals(MUNICIPALITY_TAG)
+                    && event.asEndElement().getName().getPrefix().equals(DATA_PREFIX)) {
+                return new BaseMunicipality(code, name);
             }
+
         }
         throw new MunicipalityParserException("Wrong XML format <" + MUNICIPALITY_TAG + "> tag opened, but EOF reached before closing tag was found");
     }
@@ -113,11 +110,12 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                     case NAME_TAG:
                         name = reader.getElementText();
                 }
-            } else {
-                if (event.isEndElement() && event.asEndElement().getName().getLocalPart().equals(MUNICIPALITY_PART_TAG)) {
-                    return new BaseMunicipalityPart(code, municipalityCode, name);
-                }
+            } else if (event.isEndElement()
+                    && event.asEndElement().getName().getLocalPart().equals(MUNICIPALITY_PART_TAG)
+                    && event.asEndElement().getName().getPrefix().equals(DATA_PREFIX)) {
+                return new BaseMunicipalityPart(code, municipalityCode, name);
             }
+
         }
         throw new MunicipalityParserException("Wrong XML format <" + MUNICIPALITY_PART_TAG + "> tag opened, but EOF reached before closing tag was found");
     }
