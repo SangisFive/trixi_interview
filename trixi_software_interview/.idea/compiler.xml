@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="trixi_software_interview" target="1.5" />
+      <module name="trixi_software_interview" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

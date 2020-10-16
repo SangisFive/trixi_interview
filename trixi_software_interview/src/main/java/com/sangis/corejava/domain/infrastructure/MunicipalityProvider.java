@@ -5,6 +5,7 @@ import com.sangis.corejava.domain.infrastructure.fileProvider.IFileProvider;
 import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParser;
 import com.sangis.corejava.domain.infrastructure.parser.MunicipalityParserException;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 
@@ -17,7 +18,7 @@ public class MunicipalityProvider implements IMunicipalityProvider {
         this.parser = parser;
     }
     public Iterable<BaseMunicipality> getMunicipalities() throws IOException, MunicipalityParserException {
-        return parser.parse(fileProvider.getFile());
+        return parser.parse(new FileInputStream(fileProvider.getFile()));
     }
 }
 
