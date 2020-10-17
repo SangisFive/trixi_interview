@@ -23,6 +23,7 @@ public class FileProviderUnzipDecorator implements IFileProvider {
             throw new FileNotFoundException("No files in zipfile!");
         }   else {
             File unzippedTemporaryFile =  File.createTempFile("temp", ".xml");
+            unzippedTemporaryFile.deleteOnExit();
 
             FileOutputStream fileOutputStream = new FileOutputStream(unzippedTemporaryFile);
             byte[] buffer = new byte[1024];

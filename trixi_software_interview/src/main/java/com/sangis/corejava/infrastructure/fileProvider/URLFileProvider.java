@@ -17,6 +17,7 @@ public class URLFileProvider implements IFileProvider {
         URL url = new URL(fileUrl);
         BufferedInputStream in = new BufferedInputStream(new URL(fileUrl).openStream());
         File tempFile = File.createTempFile("File", getExtension(url.getFile()));
+        tempFile.deleteOnExit();
         FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
         byte[] dataBuffer = new byte[1024];
         int bytesRead;

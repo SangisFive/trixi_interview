@@ -12,14 +12,15 @@ import com.sangis.corejava.infrastructure.persistence.IMunicipalityRepository;
 import com.sangis.corejava.infrastructure.persistence.PostgreMunicipalityRepository;
 
 public class ApplicationFactory {
-    private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
+//    private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
 //    public static final String FILE_NAME = "20200930_OB_573060_UZSZ.xml.zip";
+    private static final String FILE_URL = "https://vdp.cuzk.cz/vymenny_format/soucasna/20200930_OB_573060_UZSZ.xml.zip";
 
     //SQL
     private static final String DB_USERNAME = "sa";
     private static final String DB_PASSWORD = "1234567";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/municipality_db";
-    private static final boolean DB_SSL = true;
+    private static final boolean DB_SSL = false;
 
     public static MunicipalityApplication make(){
        return new MunicipalityApplicationImpl(ApplicationFactory.makeMunicipalityProvider(), makeMunicipalityRepository());
