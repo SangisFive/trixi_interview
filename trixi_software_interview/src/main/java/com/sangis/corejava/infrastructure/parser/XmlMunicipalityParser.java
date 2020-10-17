@@ -47,11 +47,8 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                     return;
 
                 // Municipality found!
-                skipUntilStartElement(reader, MUNICIPALITY_PREFIX, CODE_TAG);
-                int code = Integer.parseInt(reader.getElementText());
-                skipUntilStartElement(reader, MUNICIPALITY_PREFIX, NAME_TAG);
-                String name = reader.getElementText();
-                municipalities.put(code, new BaseMunicipality(code, name));
+                BaseMunicipality municipality = parseMunicipality(reader);
+                municipalities.put(municipality.getCode(), municipality);
 
             });
             if (endOfFileReached) return municipalities.values();
@@ -60,24 +57,15 @@ public class XmlMunicipalityParser implements MunicipalityParser {
             if (endOfFileReached) return municipalities.values();
 
             // Municipality parts found!
-
             doUntilEndElementFound(reader, DATA_PREFIX, MUNICIPALITY_PARTS_TAG, (element) -> {
                 QName elementName = element.getName();
                 if (!elementName.getPrefix().equals(DATA_PREFIX) || !elementName.getLocalPart().equals(MUNICIPALITY_PART_TAG))
                     return;
 
                 // Municipality part found!
-                skipUntilStartElement(reader, MUNICIPALITY_PART_PREFIX, CODE_TAG);
-                int code = Integer.parseInt(reader.getElementText());
-                skipUntilStartElement(reader, MUNICIPALITY_PART_PREFIX, NAME_TAG);
-                String name = reader.getElementText();
-
-                skipUntilStartElement(reader, MUNICIPALITY_PREFIX, CODE_TAG);
-                int municipalityCode = Integer.parseInt(reader.getElementText());
-
-                BaseMunicipality parent = municipalities.get(municipalityCode);
-                parent.addParts(new SingleItemIterator<>(new BaseMunicipalityPart(code, municipalityCode, name)));
-
+                BaseMunicipalityPart municipalityPart = parseMunicipalityPart(reader);
+                BaseMunicipality parent = municipalities.get(municipalityPart.getMunicipalityCode());
+                parent.addParts(new SingleItemIterator<>(municipalityPart));
 
             });
             return municipalities.values();
@@ -151,7 +139,6 @@ public class XmlMunicipalityParser implements MunicipalityParser {
                         // Skip if searching for tagName and tagName does not match
                         continue;
                     }
-                    System.out.println("START "+ event.toString());
                     // matching opening tag found
                     return false;
                 }
@@ -163,17 +150,13 @@ public class XmlMunicipalityParser implements MunicipalityParser {
         }
     }
 
-    private String extractElementText(final XMLEventReader reader, String prefix, String tag) throws MunicipalityParserException {
-        final StringBuilder text = new StringBuilder();
+    private BaseMunicipality parseMunicipality(final XMLEventReader reader) throws MunicipalityParserException, XMLStreamException {
 
-        return text.toString();
+        skipUntilStartElement(reader, MUNICIPALITY_PREFIX, CODE_TAG);
+        int code = Integer.parseInt(reader.getElementText());
 
-    }
-
-
-    private BaseMunicipality parseMunicipality(final XMLEventReader reader) throws MunicipalityParserException {
-        final int code = Integer.parseInt(extractElementText(reader, MUNICIPALITY_PREFIX, CODE_TAG));
-        final String name = extractElementText(reader, MUNICIPALITY_PREFIX, NAME_TAG);
+        skipUntilStartElement(reader, MUNICIPALITY_PREFIX, NAME_TAG);
+        String name = reader.getElementText();
 
         if (code > 0 && !name.isEmpty()) {
             return new BaseMunicipality(code, name);
@@ -183,17 +166,21 @@ public class XmlMunicipalityParser implements MunicipalityParser {
     }
 
 
-    private BaseMunicipalityPart parseMunicipalityPart(final XMLEventReader reader) throws MunicipalityParserException {
-        final int code = Integer.parseInt(extractElementText(reader, MUNICIPALITY_PART_PREFIX, CODE_TAG));
-        final String name = extractElementText(reader, MUNICIPALITY_PART_PREFIX, NAME_TAG);
-        final int municipalityCode = Integer.parseInt(extractElementText(reader, MUNICIPALITY_PREFIX, CODE_TAG));
+    private BaseMunicipalityPart parseMunicipalityPart(final XMLEventReader reader) throws MunicipalityParserException, XMLStreamException {
+
+        skipUntilStartElement(reader, MUNICIPALITY_PART_PREFIX, CODE_TAG);
+        int code = Integer.parseInt(reader.getElementText());
+
+        skipUntilStartElement(reader, MUNICIPALITY_PART_PREFIX, NAME_TAG);
+        String name = reader.getElementText();
+
+        skipUntilStartElement(reader, MUNICIPALITY_PREFIX, CODE_TAG);
+        int municipalityCode = Integer.parseInt(reader.getElementText());
 
         if (code > 0 && !name.isEmpty() && municipalityCode > 0) {
             return new BaseMunicipalityPart(code, municipalityCode, name);
         }
         throw new MunicipalityParserException("Error parsing MunicipalityPart: code, name or municipalityCode are not found or the values are not valid");
-
-
     }
 
 
