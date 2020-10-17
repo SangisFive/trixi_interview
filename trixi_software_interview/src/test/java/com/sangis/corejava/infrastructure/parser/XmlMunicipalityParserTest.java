@@ -27,8 +27,8 @@ class XmlMunicipalityParserTest {
             testData.add(m);
 
             List<BaseMunicipalityPart> parts = new ArrayList<BaseMunicipalityPart>();
-            for (int j = 1 ; j < 10 + i; j++) {
-                int code = j*i;
+            for (int j = 1; j < 10 + i; j++) {
+                int code = j * i;
                 BaseMunicipalityPart p = new BaseMunicipalityPart(code, i, "Name of municipality part " + code);
                 parts.add(p);
             }
@@ -41,6 +41,7 @@ class XmlMunicipalityParserTest {
 
         compare(testData, results);
     }
+
     @Test
     void parseNoMunicipalities() throws UnsupportedEncodingException, MunicipalityParserException {
 
@@ -52,6 +53,7 @@ class XmlMunicipalityParserTest {
 
         compare(testData, results);
     }
+
     @Test
     void parseNoParts() throws UnsupportedEncodingException, MunicipalityParserException {
 
