@@ -7,7 +7,6 @@ https://github.com/SangisFive/trixi_interview/tree/main/trixi_software_interview
 Backend with a single endpoint returning a hardcoded xml file for download testing:
 https://github.com/SangisFive/trixi_interview/tree/main/backend_with_file_for_testing 
 
-Assignment: 
 Zadání:
 Vytvořte javovskou aplikaci, která stáhne data v xml z internetu, zpracuje je a uloží do sql databáze.
 Zazipované XML na URL https:[THIS PART IS HIDDEN DUE TO BOTHERING OF THE ORIGINAL SERVER]/vymenny_format/soucasna/20200930_OB_573060_UZSZ.xml.zip obsahuje všechny adresy v obci Kopidlno. Cílem je napsat program který stáhne soubor z daného URL, zparsuje data z XML a (některá) uloží do DB.
