@@ -7,7 +7,7 @@ https://github.com/SangisFive/trixi_interview/tree/main/trixi_software_interview
 Backend with a single endpoint returning a hardcoded xml file for download testing:
 https://github.com/SangisFive/trixi_interview/tree/main/backend_with_file_for_testing 
 
-THE ORIGINAL ASSIGNMENT (All the text, grammar and formatting is maintained. Except the url.):
+THE ORIGINAL ASSIGNMENT (All the text, grammar and formatting is maintained. Except the url):
 
 Zadání:
 Vytvořte javovskou aplikaci, která stáhne data v xml z internetu, zpracuje je a uloží do sql databáze.
