@@ -12,9 +12,9 @@ import com.sangis.corejava.infrastructure.persistence.IMunicipalityRepository;
 import com.sangis.corejava.infrastructure.persistence.PostgreMunicipalityRepository;
 
 public class ApplicationFactory {
-//    private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
-//    public static final String FILE_NAME = "20200930_OB_573060_UZSZ.xml.zip";
-    private static final String FILE_URL = "https://vdp.cuzk.cz/vymenny_format/soucasna/20200930_OB_573060_UZSZ.xml.zip";
+    // Replaced to localhost, reason:
+    // i don't want to bother the original server, thank you for understanding
+    private static final String FILE_URL = "http://localhost:8080/files/20200930_OB_573060_UZSZ.xml.zip";
 
     //SQL
     private static final String DB_USERNAME = "sa";
@@ -29,7 +29,6 @@ public class ApplicationFactory {
 
     private static  IFileProvider makeFileProvider(){
         IFileProvider fileProvider = new URLFileProvider(FILE_URL);
-//       IFileProvider fileProvider = new ResourcesFileProvider(FILE_NAME);
         fileProvider = new FileProviderUnzipDecorator(fileProvider);
         return fileProvider;
     }
