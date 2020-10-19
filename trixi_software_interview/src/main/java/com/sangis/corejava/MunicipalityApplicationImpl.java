@@ -7,13 +7,17 @@ import com.sangis.corejava.infrastructure.parser.MunicipalityParserException;
 import com.sangis.corejava.infrastructure.persistence.IMunicipalityRepository;
 import com.sangis.corejava.infrastructure.persistence.PersistenceException;
 import com.sangis.corejava.utils.EmptyIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 public class MunicipalityApplicationImpl extends MunicipalityApplication {
     private final IMunicipalityProvider provider;
-    private  final IMunicipalityRepository repository;
+    private final IMunicipalityRepository repository;
+    private static final Logger logger = LoggerFactory.getLogger(MunicipalityApplicationImpl.class);
+
     public MunicipalityApplicationImpl(IMunicipalityProvider provider, IMunicipalityRepository repository) {
         this.provider = provider;
         this.repository = repository;
@@ -21,15 +25,15 @@ public class MunicipalityApplicationImpl extends MunicipalityApplication {
 
 
     private void onError(Exception e) {
-        e.printStackTrace();
+        logger.error("Fatal:", e);
     }
 
     protected Iterator<BaseMunicipality> getMunicipalities() {
         try {
-            return provider.getMunicipalities().iterator();
-        } catch (IOException e) {
-            onError(e);
-        } catch (MunicipalityParserException e) {
+            Iterator<BaseMunicipality> municipalities = provider.getMunicipalities().iterator();
+            logger.info("Municipalities have been successfully loaded");
+            return municipalities;
+        } catch (IOException | MunicipalityParserException e) {
             onError(e);
         }
         return new EmptyIterator<BaseMunicipality>();
@@ -38,7 +42,8 @@ public class MunicipalityApplicationImpl extends MunicipalityApplication {
 
     protected void persistMunicipality(BaseMunicipality municipality) {
         try {
-            repository.saveMunicipality(municipality);
+            BaseMunicipality saved = repository.saveMunicipality(municipality);
+            logger.info("Municipality: " + saved.toString() + "\n has been successfully saved");
         } catch (PersistenceException e) {
             onError(e);
         }

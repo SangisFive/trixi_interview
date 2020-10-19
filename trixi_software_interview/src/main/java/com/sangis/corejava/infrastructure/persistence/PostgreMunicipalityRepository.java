@@ -65,10 +65,8 @@ public class PostgreMunicipalityRepository implements IMunicipalityRepository {
             Class.forName("org.postgresql.Driver");
 
             return DriverManager.getConnection(url, properties);
-        } catch (SQLException e) {
-            throw new PersistenceException(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new PersistenceException(e.getMessage());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new PersistenceException(e.getMessage(), e);
         }
     }
 
@@ -125,7 +123,7 @@ public class PostgreMunicipalityRepository implements IMunicipalityRepository {
                 sqlException.printStackTrace();
             }
 
-            throw new PersistenceException(e.getMessage());
+            throw new PersistenceException(e.getMessage(), e);
         }
 
 
@@ -153,7 +151,7 @@ public class PostgreMunicipalityRepository implements IMunicipalityRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            throw new PersistenceException(sqlException.getMessage());
+            throw new PersistenceException(sqlException.getMessage(), sqlException);
         }
         return municipalityPart;
     }
@@ -186,7 +184,7 @@ public class PostgreMunicipalityRepository implements IMunicipalityRepository {
             }
 
 
-            throw new PersistenceException(sqlException.getMessage());
+            throw new PersistenceException(sqlException.getMessage(), sqlException);
         }
     }
 
@@ -215,7 +213,7 @@ public class PostgreMunicipalityRepository implements IMunicipalityRepository {
             }
 
 
-            throw new PersistenceException(sqlException.getMessage());
+            throw new PersistenceException(sqlException.getMessage(), sqlException);
         }
     }
 

@@ -72,7 +72,7 @@ public class XmlMunicipalityParser implements MunicipalityParser {
 
 
         } catch (XMLStreamException e) {
-            throw new MunicipalityParserException(e.getMessage());
+            throw new MunicipalityParserException(e.getMessage(),e);
         }
 
 
@@ -110,7 +110,7 @@ public class XmlMunicipalityParser implements MunicipalityParser {
 
         } catch (XMLStreamException e) {
             e.printStackTrace();
-            throw new MunicipalityParserException(e.getMessage());
+            throw new MunicipalityParserException(e.getMessage(),e);
         }
     }
 
@@ -146,7 +146,7 @@ public class XmlMunicipalityParser implements MunicipalityParser {
             return true;
 
         } catch (XMLStreamException e) {
-            throw new MunicipalityParserException(e.getMessage());
+            throw new MunicipalityParserException(e.getMessage(),e);
         }
     }
 
